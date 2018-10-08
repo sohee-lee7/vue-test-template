@@ -24,7 +24,7 @@
     </div>
 </template>
 <script>
-import { chartTreemap } from '@toast-ui/vue-chart';
+import { treemapChart } from '@toast-ui/vue-chart';
 import common from './common.js';
 
 const data = {
@@ -160,7 +160,7 @@ const theme = {
 export default {
     name: 'TreeMap',
     components: {
-        'chart': chartTreemap
+        'chart': treemapChart
     },
     mixins: [common],
     data() {

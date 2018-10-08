@@ -23,7 +23,7 @@
     </div>
 </template>
 <script>
-import { chartBubble } from '@toast-ui/vue-chart';
+import { bubbleChart } from '@toast-ui/vue-chart';
 import common from './common.js';
 
 const data = {
@@ -185,7 +185,7 @@ const theme = {
 export default {
     name: 'BubbleChart',
     components: {
-        'chart': chartBubble
+        'chart': bubbleChart
     },
     mixins: [common],
     data() {

@@ -25,7 +25,7 @@
     </div>
 </template>
 <script>
-import { chartMap } from '@toast-ui/vue-chart';
+import { mapChart } from '@toast-ui/vue-chart';
 import common from './common.js';
 
 const data = {
@@ -121,7 +121,7 @@ const theme = {
 export default {
     name: 'MapChart',
     components: {
-        'chart': chartMap
+        'chart': mapChart
     },
     mixins: [common],
     data() {

@@ -6,6 +6,13 @@
         :options="chartOptions"
         :theme="chartTheme"
         @load="onLoad"
+        @selectLegend="onSelectLegend"
+        @selectSeries="onSelectSeries"
+        @unselectSeries="onUnselectSeries"
+        @beforeShowTooltip="onBeforeShowTooltip"
+        @afterShowTooltip="onAfterShowTooltip"
+        @beforeHideTooltip="onBeforeHideTooltip"
+        @zoom="onZoom"
         />
         <div>
             <h3>Function Test Buttons</h3>
@@ -17,7 +24,7 @@
     </div>
 </template>
 <script>
-import { chartColumn } from '@toast-ui/vue-chart';
+import { columnChart } from '@toast-ui/vue-chart';
 import common from './common.js';
 
 var data = {
@@ -74,7 +81,7 @@ const theme = {
 export default {
     name: 'Column',
     components: {
-        'chart': chartColumn
+        'chart': columnChart
     },
     mixins: [common],
     data() {

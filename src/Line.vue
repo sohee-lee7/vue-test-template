@@ -19,42 +19,45 @@
             <button v-for="method in methodNames" :key="method" @click="methodInvoke(method)">
                 {{ method }}
             </button>
+            <button @click="addData">
+                addData
+            </button>
             <p>Function Result : {{ message }}</p>
         </div>
     </div>
 </template>
 <script>
-import { chartLine } from '@toast-ui/vue-chart';
+import { lineChart, columnChart } from '@toast-ui/vue-chart';
 import common from './common.js';
 
 const data = {
-    categories: ['01/01/2016', '02/01/2016', '03/01/2016', '04/01/2016', '05/01/2016', '06/01/2016', '07/01/2016', '08/01/2016', '09/01/2016', '10/01/2016', '11/01/2016', '12/01/2016'],
+    categories: ['2015', '2016', '2017', '2018'],
     series: [
         {
             name: 'Seoul',
-            data: [-3.5, -1.1, 4.0, 11.3, 17.5, 21.5, 24.9, 25.2, 20.4, 13.9, 6.6, -0.6]
+            data: [-3.5, -1.1, 4.0, 11.3]
         },
         {
             name: 'Seattle',
-            data: [3.8, 5.6, 7.0, 9.1, 12.4, 15.3, 17.5, 17.8, 15.0, 10.6, 6.4, 3.7]
+            data: [3.8, 5.6, 7.0, 9.1]
         },
         {
             name: 'Sydney',
-            data: [22.1, 22.0, 20.9, 18.3, 15.2, 12.8, 11.8, 13.0, 15.2, 17.6, 19.4, 21.2]
+            data: [22.1, 22.0, 20.9, 18.3]
         },
         {
             name: 'Moskva',
-            data: [-10.3, -9.1, -4.1, 4.4, 12.2, 16.3, 18.5, 16.7, 10.9, 4.2, -2.0, -7.5]
+            data: [-10.3, -9.1, -4.1, 4.4]
         },
         {
             name: 'Jungfrau',
-            data: [-13.2, -13.7, -13.1, -10.3, -6.1, -3.2, 0.0, -0.1, -1.8, -4.5, -9.0, -10.9]
+            data: [-13.2, -13.7, -13.1, -10.3]
         }
     ]
 };
 const options = {
     chart: {
-        width: 1160,
+        width: 500,
         height: 540,
         title: '24-hr Average Temperature'
     },
@@ -63,9 +66,7 @@ const options = {
         pointOnColumn: true
     },
     xAxis: {
-        title: 'Month',
-        type: 'datetime',
-        dateFormat: 'MMM'
+        title: 'Years'
     },
     series: {
         showDot: false,
@@ -78,16 +79,20 @@ const options = {
 const theme = {
     series: {
         colors: [
-            '#83b14e', '#458a3f', '#295ba0', '#2a4175', '#289399',
-            '#289399', '#617178', '#8a9a9a', '#516f7d', '#dddddd'
+            '#ff00ff', '#ffff00', '#00ff00', '#00ffff', '#0000ff'
         ]
+    },
+    legend: {
+        label: {
+            fontSize: 20
+        }
     }
 };
 
 export default {
     name: 'LineChart',
     components: {
-        'chart': chartLine
+        'chart': lineChart
     },
     mixins: [common],
     data() {
@@ -95,6 +100,38 @@ export default {
             chartData: data,
             chartOptions: options,
             chartTheme: theme
+        }
+    },
+    methods: {
+        changeData1() {
+            this.chartData = {
+                categories: ['2015', '2016', '2017', '2018', '2019'],
+                series: [
+                    {
+                        name: 'Seoul',
+                        data: [-3.5, -1.1, 4.0, 11.3, 1]
+                    },
+                    {
+                        name: 'Seattle',
+                        data: [3.8, 5.6, 7.0, 9.1, 2]
+                    },
+                    {
+                        name: 'Sydney',
+                        data: [22.1, 22.0, 20.9, 18.3, 3]
+                    },
+                    {
+                        name: 'Moskva',
+                        data: [-10.3, -9.1, -4.1, 4.4, 4]
+                    },
+                    {
+                        name: 'Jungfrau',
+                        data: [-13.2, -13.7, -13.1, -10.3, 5]
+                    }
+                ]
+            }
+        },
+        addData() {
+            this.$refs.tuiChart.invoke('addData', '2019', [1,2,3,4,5]);
         }
     }
 };

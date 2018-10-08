@@ -23,7 +23,7 @@
     </div>
 </template>
 <script>
-import { chartScatter } from '@toast-ui/vue-chart';
+import { scatterChart } from '@toast-ui/vue-chart';
 import common from './common.js';
 
 const data = {
@@ -589,7 +589,7 @@ const theme = {
 export default {
     name: 'ScatterChart',
     components: {
-        'chart': chartScatter
+        'chart': scatterChart
     },
     mixins: [common],
     data() {

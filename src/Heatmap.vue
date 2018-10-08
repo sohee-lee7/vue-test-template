@@ -24,7 +24,7 @@
     </div>
 </template>
 <script>
-import { chartHeatmap } from '@toast-ui/vue-chart';
+import { heatmapChart } from '@toast-ui/vue-chart';
 import common from './common.js';
 
 const data = {
@@ -71,7 +71,7 @@ const theme = {
 export default {
     name: 'HeatMap',
     components: {
-        'chart': chartHeatmap
+        'chart': heatmapChart
     },
     mixins: [common],
     data() {

@@ -24,7 +24,7 @@
     </div>
 </template>
 <script>
-import { chartMap } from '@toast-ui/vue-chart';
+import { mapChart } from '@toast-ui/vue-chart';
 import common from './common.js';
 
 const data = {
@@ -137,7 +137,7 @@ const germanyMap = [{'code': "DE-BW", 'name':"Baden-Wurttemberg", 'path': "M180.
 export default {
     name: 'MapChart',
     components: {
-        'chart': chartMap
+        'chart': mapChart
     },
     mixins: [common],
     data() {

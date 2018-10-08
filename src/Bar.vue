@@ -24,19 +24,19 @@
     </div>
 </template>
 <script>
-import { chartBar } from '@toast-ui/vue-chart';
+import { barChart } from '@toast-ui/vue-chart';
 import common from './common.js';
 
 const data = {
-    categories: ['June', 'July', 'Aug', 'Sep', 'Oct', 'Nov'],
+    categories: ['July', 'Aug', 'Sep', 'Oct', 'Nov'],
     series: [
         {
             name: 'Budget',
-            data: [5000, 3000, 5000, 7000, 6000, 4000]
+            data: [3000, 5000, 7000, 6000, 4000]
         },
         {
             name: 'Income',
-            data: [8000, 1000, 7000, 2000, 5000, 3000]
+            data: [1000, 7000, 2000, 5000, 3000]
         }
     ]
 };
@@ -57,7 +57,8 @@ const options = {
         suffix: '$'
     },
     series: {
-        showLabel: true
+        showLabel: true,
+        allowSelect: true
     }
 };
 const theme = {
@@ -72,7 +73,7 @@ const theme = {
 export default {
     name: 'Bar',
     components: {
-        'chart': chartBar
+        'chart': barChart
     },
     mixins: [common],
     data() {

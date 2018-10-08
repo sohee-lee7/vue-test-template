@@ -24,7 +24,7 @@
     </div>
 </template>
 <script>
-import { chartBullet } from '@toast-ui/vue-chart';
+import { bulletChart } from '@toast-ui/vue-chart';
 import common from './common.js';
 
 const data = {
@@ -81,7 +81,7 @@ const theme = {
 export default {
     name: 'Bullet',
     components: {
-        'chart': chartBullet
+        'chart': bulletChart
     },
     mixins: [common],
     data() {

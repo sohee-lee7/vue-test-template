@@ -4,7 +4,6 @@
         ref="tuiChart"
         :data="chartData"
         :options="chartOptions"
-        :theme="chartTheme"
         @load="onLoad"
         @selectLegend="onSelectLegend"
         @selectSeries="onSelectSeries"
@@ -24,7 +23,7 @@
     </div>
 </template>
 <script>
-import { chartPie } from '@toast-ui/vue-chart';
+import { pieChart } from '@toast-ui/vue-chart';
 import common from './common.js';
 
 const data = {
@@ -78,7 +77,7 @@ const theme = {
 export default {
     name: 'PieChart',
     components: {
-        'chart': chartPie
+        'chart': pieChart
     },
     mixins: [common],
     data() {
@@ -86,6 +85,38 @@ export default {
             chartData: data,
             chartOptions: options,
             chartTheme: theme
+        }
+    },
+    methods: {
+        changeData1() {
+            this.chartData = {
+                series: [
+                    {
+                        name: 'Chrome',
+                        data: 20
+                    },
+                    {
+                        name: 'IE',
+                        data: 20
+                    },
+                    {
+                        name: 'Firefox',
+                        data: 20
+                    },
+                    {
+                        name: 'Safari',
+                        data: 20
+                    },
+                    {
+                        name: 'Opera',
+                        data: 20
+                    },
+                    {
+                        name: 'Etc',
+                        data: 20
+                    }
+                ]
+            }
         }
     }
 };

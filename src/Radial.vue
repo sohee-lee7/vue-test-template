@@ -24,7 +24,7 @@
     </div>
 </template>
 <script>
-import { chartRadial } from '@toast-ui/vue-chart';
+import { radialChart } from '@toast-ui/vue-chart';
 import common from './common.js';
 
 const data = {
@@ -78,7 +78,7 @@ const theme = {
 export default {
     name: 'Radial',
     components: {
-        'chart': chartRadial
+        'chart': radialChart
     },
     mixins: [common],
     data() {

@@ -24,7 +24,7 @@
     </div>
 </template>
 <script>
-import { chartCombo } from '@toast-ui/vue-chart';
+import { comboChart } from '@toast-ui/vue-chart';
 import common from './common.js';
 
 const data = {
@@ -102,7 +102,7 @@ const theme = {
 export default {
     name: 'ComboChart',
     components: {
-        'chart': chartCombo
+        'chart': comboChart
     },
     mixins: [common],
     data() {

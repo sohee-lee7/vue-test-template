@@ -23,7 +23,7 @@
     </div>
 </template>
 <script>
-import { chartBoxplot } from '@toast-ui/vue-chart';
+import { boxplotChart } from '@toast-ui/vue-chart';
 import common from './common.js';
 
 const data = {
@@ -85,7 +85,7 @@ const theme = {
 export default {
     name: 'boxplot',
     components: {
-        'chart': chartBoxplot
+        'chart': boxplotChart
     },
     mixins: [common],
     data() {

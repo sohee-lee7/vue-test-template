@@ -24,7 +24,7 @@
     </div>
 </template>
 <script>
-import { chartArea } from '@toast-ui/vue-chart';
+import { areaChart } from '@toast-ui/vue-chart';
 import common from './common.js'
 
 const data = {
@@ -65,7 +65,7 @@ const theme = {
 export default {
     name: 'AreaChart',
     components: {
-        'chart': chartArea
+        'chart': areaChart
     },
     mixins: [common],
     data() {
