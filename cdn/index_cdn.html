@@ -5,13 +5,41 @@
     </head>
     <body>
         <div id="app">
-            <h1>TEST</h1>
+            <grid :rowData="rows" :columnData="columns" />
         </div>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="../node_modules/@toast-ui/vue-grid/dist/vue-grid.js"></script>
     <script type="text/javascript">
         new Vue({
-            el: '#app'
+            el: '#app',
+            components: {
+                'grid': toastui.Grid
+            },
+            data() {
+                return {
+                    rows: [ // for rowData prop
+                        {
+                            name: 'Beautiful Lies',
+                            artist: 'Birdy'
+                        },
+                        {
+                            name: 'X',
+                            artist: 'Ed Sheeran'
+                        }
+                    ],
+                    columns: [ // for columnData prop
+                        {
+                            title: 'Name',
+                            name: 'name',
+                        },
+                        {
+                            title: 'Artist',
+                            name: 'artist'
+                        }
+                    ]
+                }
+            }
         });
     </script>
 </html>

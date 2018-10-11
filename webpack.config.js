@@ -29,8 +29,8 @@ module.exports = {
                 loader: ['vue-style-loader', 'css-loader']
             },
             {
-                test: /\.png$/,
-                loader: ['url-loader']
+                test: /\.(png|gif)$/,
+                loader: ['file-loader']
             }
         ]
     },
