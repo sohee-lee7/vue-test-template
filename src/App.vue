@@ -47,7 +47,7 @@
     </div>
 </template>
 <script>
-import Grid from '@toast-ui/vue-grid';
+import { Grid } from '@toast-ui/vue-grid';
 import * as dummy from './dummy.js';
 
 export default {
@@ -76,8 +76,8 @@ export default {
                 name: 'setHeight',
                 args: [500]
             }],
-            rowData: dummy.rows,
-            columnData: dummy.columnsInputType,
+            rowData: dummy.rowsSimple,
+            columnData: dummy.columnsSimple,
             options: dummy.options,
             customTheme: {
                 name: 'custom',

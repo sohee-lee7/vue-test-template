@@ -5,7 +5,7 @@
     </head>
     <body>
         <div id="app">
-            <grid :rowData="rows" :columnData="columns" />
+            <grid :rowData="rows" :columnData="columns"/>
         </div>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -20,12 +20,32 @@
                 return {
                     rows: [ // for rowData prop
                         {
+                            id: 549731,
                             name: 'Beautiful Lies',
-                            artist: 'Birdy'
+                            artist: 'Birdy',
+                            release: '2016.03.26',
+                            type: 'Deluxe',
+                            typeCode: '1',
+                            genre: 'Pop',
+                            genreCode: '1',
+                            grade: '4',
+                            price: 10000,
+                            downloadCount: 1000,
+                            listenCount: 5000
                         },
                         {
+                            id: 436461,
                             name: 'X',
-                            artist: 'Ed Sheeran'
+                            artist: 'Ed Sheeran',
+                            release: '2014.06.24',
+                            type: 'Deluxe',
+                            typeCode: '1',
+                            genre: 'Pop',
+                            genreCode: '1',
+                            grade: '5',
+                            price: 20000,
+                            downloadCount: 1000,
+                            listenCount: 5000
                         }
                     ],
                     columns: [ // for columnData prop

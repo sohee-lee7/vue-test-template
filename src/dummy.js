@@ -307,6 +307,26 @@ export const columnsFormatter = [
         name: 'genre'
     }
 ];
+export const rowsSimple = [
+    {
+        name: 'Beautiful Lies',
+        artist: 'Birdy'
+    },
+    {
+        name: 'X',
+        artist: 'Ed Sheeran'
+    }
+];
+export const columnsSimple = [
+    {
+        title: 'Name',
+        name: 'name',
+    },
+    {
+        title: 'Artist',
+        name: 'artist'
+    }
+];
 export const rows = [
     {
         id: 549731,
