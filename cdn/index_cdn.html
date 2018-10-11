@@ -5,60 +5,36 @@
     </head>
     <body>
         <div id="app">
-            <grid :rowData="rows" :columnData="columns"/>
         </div>
     </body>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="../node_modules/@toast-ui/vue-grid/dist/vue-grid.js"></script>
+    <script src="https://uicdn.toast.com/toast-ui.vue-grid/latest/vue-grid.js"></script>
     <script type="text/javascript">
+        const rows = [ // for rowData prop
+            {
+                name: 'Beautiful Lies',
+                artist: 'Birdy'
+            },
+            {
+                name: 'X',
+                artist: 'Ed Sheeran'
+            }
+        ];
+        const columns = [ // for columnData prop
+            {
+                title: 'Name',
+                name: 'name',
+            },
+            {
+                title: 'Artist',
+                name: 'artist'
+            }
+        ]
         new Vue({
             el: '#app',
+            template: '<grid :rowData="rows" :columnData="columns"/>',
             components: {
                 'grid': toastui.Grid
-            },
-            data() {
-                return {
-                    rows: [ // for rowData prop
-                        {
-                            id: 549731,
-                            name: 'Beautiful Lies',
-                            artist: 'Birdy',
-                            release: '2016.03.26',
-                            type: 'Deluxe',
-                            typeCode: '1',
-                            genre: 'Pop',
-                            genreCode: '1',
-                            grade: '4',
-                            price: 10000,
-                            downloadCount: 1000,
-                            listenCount: 5000
-                        },
-                        {
-                            id: 436461,
-                            name: 'X',
-                            artist: 'Ed Sheeran',
-                            release: '2014.06.24',
-                            type: 'Deluxe',
-                            typeCode: '1',
-                            genre: 'Pop',
-                            genreCode: '1',
-                            grade: '5',
-                            price: 20000,
-                            downloadCount: 1000,
-                            listenCount: 5000
-                        }
-                    ],
-                    columns: [ // for columnData prop
-                        {
-                            title: 'Name',
-                            name: 'name',
-                        },
-                        {
-                            title: 'Artist',
-                            name: 'artist'
-                        }
-                    ]
-                }
             }
         });
     </script>
