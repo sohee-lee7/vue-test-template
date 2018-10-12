@@ -6,8 +6,9 @@ const common = {
                 'resize',
                 'animateChart',
                 'selectLegend',
-                'changeData1',
-                'changeData2'
+                'reset',
+                'removeCategory',
+                'addCategory'
             ]
         }
     },
@@ -18,7 +19,7 @@ const common = {
                     width: 500, 
                     height: 500
                 });
-            } else if (methodName.indexOf('changeData') > -1) {
+            } else if (methodName === 'reset' || methodName === 'removeCategory' || methodName === 'addCategory') {
                 this[methodName]();
             } else if (methodName === 'selectLegend') {
                 this.message = this.$refs.tuiChart.invoke(methodName, 1);
@@ -50,7 +51,7 @@ const common = {
         onZoom(value) {
             console.log(`zoom ${value}`);
         },
-        changeData1() {
+        reset() {
             this.chartData = {
                 categories: ['July', 'Aug', 'Sep', 'Oct', 'Nov'],
                 series: [
@@ -65,7 +66,7 @@ const common = {
                 ]
             };
         },
-        changeData2() {
+        removeCategory() {
             if (this.chartData.categories) {
                 this.chartData.categories.splice(0,1);
             }
@@ -76,6 +77,11 @@ const common = {
                     item.data.splice(0,1);
                 }
             });
+        },
+        addCategory() {
+            if (this.chartData.categories) {
+                this.chartData.categories.push("newCategory");
+            }
         }
     }
 };

@@ -103,7 +103,7 @@ export default {
         }
     },
     methods: {
-        changeData1() {
+        reset() {
             this.chartData = {
                 categories: ['2015', '2016', '2017', '2018', '2019'],
                 series: [

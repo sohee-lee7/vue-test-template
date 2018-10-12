@@ -88,7 +88,7 @@ export default {
         }
     },
     methods: {
-        changeData1() {
+        reset() {
             this.chartData = {
                 series: [
                     {
