@@ -1,38 +1,211 @@
 <template>
     <div id="app">
         <div>
-            <h3>Props Test Buttons</h3>
-            <button @click="changeProp">changeProp</button>
+            <select v-model="selectedView">
+                <option>month</option>
+                <option>day</option>
+                <option>week</option>
+            </select>
+            <button @click="changeThemeMonth">changeThemeMonth</button>
+            <button @click="changeThemeWeek">changeThemeWeek</button>
+            <button @click="monthVisibleWeeksCount">month.visibleWeeksCount</button>
+            <button @click="weekNarrowWeekend">week.narrowWeekend</button>
+            <button @click="changeTaskView">changeTaskView</button>
+            <button @click="addSchedule">addSchedule</button>
+            <button @click="removeSchedule">removeSchedule</button>
+            <button @click="addCategory">addCategory</button>
         </div>
         <div>
-            <h3>Function Test Buttons</h3>
-            <button v-for="method in methodNames" :key="method" @click="methodInvoke(method)">
-                {{ method }}
+            <button v-for="method in methods" :key="method.name" @click="methodInvoke(method)">
+                {{ method.name }}
             </button>
             <p>Function Result : {{ message }}</p>
         </div>
+        <calendar
+            id="cal"
+            ref="tuiCal"
+            :useCreationPopup="useCreationPopup"
+            :useDetailPopup="useDetailPopup"
+            :view="selectedView"
+            :calendars="calendarList"
+            :schedules="scheduleList"
+            :theme="theme"
+            :taskView="taskView"
+            :month="month"
+            :week="week"
+            @afterRenderSchedule="onAfterRenderSchedule"
+            @beforeCreateSchedule="onBeforeCreateSchedule"
+            @beforeDeleteSchedule="onBeforeDeleteSchedule"
+            @beforeUpdateSchedule="onBeforeUpdateSchedule"
+            @clickDayname="onClickDayname"
+            @clickSchedule="onClickSchedule"
+            @clickTimezonesCollapseBtn="onClickTimezonesCollapseBtn"
+        />
     </div>
 </template>
 
 <script>
+import { Calendar } from '@toast-ui/vue-calendar';
+
+const startDate= new Date(2018, 9, 15, 10, 1);
+const endDate= new Date(2018, 9, 15, 10, 10);
+
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(date.getDate() + days);
+    return result;
+}
 
 export default {
     name: 'App',
+    components: {
+        'calendar': Calendar
+    },
     data() {
         return {
             message: '',
-            methodNames: [
-                'method'
-            ]
+            methods: [
+                {
+                    name: 'prev',
+                    args: []
+                },
+                {
+                    name: 'next',
+                    args: []
+                },
+                {
+                    name: 'today',
+                    args: []
+                },
+                {
+                    name: 'getDate',
+                    args: []
+                },
+                {
+                    name: 'getOptions',
+                    args: []
+                }
+            ],
+            selectedView: 'month',
+            calendarList: [{
+                id: '0',
+                name: 'my'
+            }],
+            scheduleList: [{
+                id: 0,
+                calendarId: '0',
+                title: 'action1',
+                start: startDate,
+                end: endDate,
+                category: 'time'
+            }],
+            theme: {
+                'month.dayname.height': '30px',
+                'month.dayname.borderLeft': '1px solid #ff0000',
+                'month.dayname.textAlign': 'center',
+                'month.holidayExceptThisMonth.color': 'rgba(255, 64, 64, 0.4)',
+                'common.dayname.color': '#111'
+            },
+            month: {
+                visibleWeeksCount: 4,
+                startDayOfWeek: 1
+            },
+            week: {
+                narrowWeekend: true
+            },
+            taskView: true,
+            useCreationPopup: true,
+            useDetailPopup: true,
+            sid: 0,
+            cid: 0
         };
     },
     methods: {
-        changeProp() {
-            // change prop
+        changeThemeMonth() {
+            this.theme['month.dayname.height'] = '10px';
+            this.theme['month.dayname.textAlign'] = 'left';
         },
-        methodInvoke(methodName) {
-            // this.message = this.$refs.{something}.invoke(methodName);
+        changeThemeWeek() {
+            // this.theme = Object.assign({}, this.theme, {
+            //     'common.dayname.color': '#999'
+            // });
+            this.theme['common.dayname.color'] = '#999'
+        },
+        monthVisibleWeeksCount() {
+            this.month.visibleWeeksCount = 2;
+            this.month.startDayOfWeek = 3;
+        },
+        weekNarrowWeekend() {
+            this.week.narrowWeekend = !this.week.narrowWeekend;
+        },
+        changeTaskView() {
+            this.taskView = ['milestone'];
+        },
+        addSchedule() {
+            this.scheduleList.push({
+                id: ++this.sid,
+                calendarId: '0',
+                title: 'new Action ' + this.sid,
+                start: addDays(startDate, this.sid),
+                end: addDays(endDate, this.sid)
+            })
+        },
+        removeSchedule() {
+            this.scheduleList.pop();
+        },
+        addCategory() {
+            this.calendarList.push({
+                id: ++this.cid,
+                name: 'category '+ this.cid
+            });
+        },
+        methodInvoke(method) {
+            this.message = this.$refs.tuiCal.invoke(method.name, ...method.args);
+        },
+        onAfterRenderSchedule(e) {
+            console.log('onAfterRenderSchedule');
+            console.dir(e);
+        },
+        onBeforeCreateSchedule(e) {
+            console.log('onBeforeCreateSchedule');
+            console.dir(e);
+            e.id = ++this.sid;
+            this.scheduleList.push(e);
+        },
+        onBeforeDeleteSchedule(e) {
+            console.log('onBeforeDeleteSchedule');
+            console.dir(e);
+            this.scheduleList.splice(e.schedule.id, 1);
+        },
+        onBeforeUpdateSchedule(e) {
+            console.log('onBeforeUpdateSchedule');
+            console.dir(e);
+            e.schedule.start = e.start;
+            e.schedule.end = e.end;
+            // this.$refs.tuiCal.invoke('updateSchedule', e.schedule.id, e.schedule.calendarId, e.schedule);
+            this.scheduleList.splice(e.schedule.id, 1, e.schedule);
+        },
+        onClickDayname(e) {
+            console.log('onClickDayname');
+            console.dir(e);
+        },
+        onClickSchedule(e) {
+            console.log('onClickSchedule');
+            console.dir(e);
+        },
+        onClickTimezonesCollapseBtn(e) {
+            console.log('onClickTimezonesCollapseBtn');
+            console.dir(e);
+        },
+        onSetTimezoneOffset(timestamp) {
+            console.log('onSetTimezoneOffset: ' + timestamp);
         }
     }
 };
 </script>
+<style>
+#cal {
+    width: 1000px;
+    height: 500px
+}
+</style>
