@@ -8,9 +8,15 @@
             </select>
             <button @click="changeThemeMonth">changeThemeMonth</button>
             <button @click="changeThemeWeek">changeThemeWeek</button>
+            <button @click="changeDisableDblClick">changeDisableDblClick</button>
+            <button @click="changeIsReadOnly">changeIsReadOnly</button>
+            <button @click="popTimezone">popTimezone</button>
+            <button @click="pushTimezone">pushTimezone</button>
+            <button @click="changeTheme">changeTheme</button>
             <button @click="monthVisibleWeeksCount">month.visibleWeeksCount</button>
-            <button @click="weekNarrowWeekend">week.narrowWeekend</button>
+            <button @click="weekNarrowWeekend">week</button>
             <button @click="changeTaskView">changeTaskView</button>
+            <button @click="changeScheduleView">changeScheduleView</button>
             <button @click="addSchedule">addSchedule</button>
             <button @click="removeSchedule">removeSchedule</button>
             <button @click="addCategory">addCategory</button>
@@ -30,9 +36,14 @@
             :calendars="calendarList"
             :schedules="scheduleList"
             :theme="theme"
+            :template="template"
             :taskView="taskView"
+            :scheduleView="scheduleView"
             :month="month"
             :week="week"
+            :timezones="timezones"
+            :disableDblClick="disableDblClick"
+            :isReadOnly="isReadOnly"
             @afterRenderSchedule="onAfterRenderSchedule"
             @beforeCreateSchedule="onBeforeCreateSchedule"
             @beforeDeleteSchedule="onBeforeDeleteSchedule"
@@ -45,7 +56,7 @@
 </template>
 
 <script>
-import { Calendar } from '@toast-ui/vue-calendar';
+import Calendar from '@toast-ui/vue-calendar/src/Calendar.vue';
 
 const startDate= new Date(2018, 9, 15, 10, 1);
 const endDate= new Date(2018, 9, 15, 10, 10);
@@ -84,39 +95,74 @@ export default {
                 {
                     name: 'getOptions',
                     args: []
+                },
+                {
+                    name: 'getElement',
+                    args: ['0', '0']
                 }
             ],
-            selectedView: 'month',
+            selectedView: 'week',
             calendarList: [{
                 id: '0',
                 name: 'my'
             }],
             scheduleList: [{
-                id: 0,
+                id: '0',
                 calendarId: '0',
                 title: 'action1',
                 start: startDate,
                 end: endDate,
                 category: 'time'
+            }, {
+                id: '1',
+                calendarId: '0',
+                title: 'action1',
+                start: startDate,
+                end: endDate,
+                category: 'milestone'
+            }],
+            timezones: [{
+                timezoneOffset: 540,
+                displayLabel: 'GMT+09:00',
+                tooltip: 'Seoul'
+            }, {
+                timezoneOffset: -420,
+                displayLabel: 'GMT-08:00',
+                tooltip: 'Los Angeles'
             }],
             theme: {
                 'month.dayname.height': '30px',
                 'month.dayname.borderLeft': '1px solid #ff0000',
                 'month.dayname.textAlign': 'center',
                 'month.holidayExceptThisMonth.color': 'rgba(255, 64, 64, 0.4)',
-                'common.dayname.color': '#111'
+                'week.today.color': '#333',
+                'week.daygridLeft.width': '100px',
+                'week.timegridLeft.width': '100px'
+            },
+            template: {
+                milestone: function(schedule) {
+                    return `<span style="color:red;">${schedule.title}</span>`;
+                },
+                milestoneTitle: function() {
+                    return '마일스톤';
+                },
             },
             month: {
                 visibleWeeksCount: 4,
                 startDayOfWeek: 1
             },
             week: {
-                narrowWeekend: true
+                narrowWeekend: true,
+                showTimezoneCollapseButton: true,
+                timezonesCollapsed: true
             },
             taskView: true,
+            scheduleView: true,
             useCreationPopup: true,
             useDetailPopup: true,
-            sid: 0,
+            disableDblClick: true,
+            isReadOnly: false,
+            sid: 1,
             cid: 0
         };
     },
@@ -126,10 +172,29 @@ export default {
             this.theme['month.dayname.textAlign'] = 'left';
         },
         changeThemeWeek() {
-            // this.theme = Object.assign({}, this.theme, {
-            //     'common.dayname.color': '#999'
-            // });
-            this.theme['common.dayname.color'] = '#999'
+            this.theme['week.today.color'] = '#f00';
+            this.theme['week.today.backgroundColor'] = '#fee';
+        },
+        changeIsReadOnly() {
+            this.isReadOnly = !this.isReadOnly;
+        },
+        changeDisableDblClick() {
+            this.disableDblClick = !this.disableDblClick;
+        },
+        popTimezone() {
+            this.timezones.pop();
+        },
+        pushTimezone() {
+            this.timezones.push({
+                timezoneOffset: -120,
+                displayLabel: 'GMT-20:00',
+                tooltip: 'Los Angeles'
+            });
+        },
+        changeTheme() {
+            this.theme = Object.assign({}, this.theme, {
+                'common.dayname.color': '#0f0'
+            });
         },
         monthVisibleWeeksCount() {
             this.month.visibleWeeksCount = 2;
@@ -137,9 +202,43 @@ export default {
         },
         weekNarrowWeekend() {
             this.week.narrowWeekend = !this.week.narrowWeekend;
+            this.week.showTimezoneCollapseButton = !this.week.showTimezoneCollapseButton;
+            this.week.timezonesCollapsed = !this.week.timezonesCollapsed;
         },
         changeTaskView() {
             this.taskView = ['milestone'];
+            if (typeof this.taskView === 'boolean') {
+                if (this.taskView) {
+                    this.taskView = !this.taskView;
+                } else {
+                    this.taskView = ['milestone', 'task'];
+                }
+            } else if (this.taskView.length > 0) {
+                if (this.taskView.length === 2)  {
+                    this.taskView.pop();
+                } else if (this.taskView[0] === 'milestone') {
+                    this.taskView.splice(0, 1, 'task');
+                } else {
+                    this.taskView = true;
+                }
+            } 
+        },
+        changeScheduleView() {
+            if (typeof this.scheduleView === 'boolean') {
+                if (this.scheduleView) {
+                    this.scheduleView = !this.scheduleView;
+                } else {
+                    this.scheduleView = ['allday', 'time'];
+                }
+            } else if (this.scheduleView.length > 0) {
+                if (this.scheduleView.length === 2)  {
+                    this.scheduleView.pop();
+                } else if (this.scheduleView[0] === 'allday') {
+                    this.scheduleView.splice(0, 1, 'time');
+                } else {
+                    this.scheduleView = true;
+                }
+            } 
         },
         addSchedule() {
             this.scheduleList.push({
@@ -170,6 +269,7 @@ export default {
             console.log('onBeforeCreateSchedule');
             console.dir(e);
             e.id = ++this.sid;
+            e.category = e.isAllDay ? 'allday' : 'time';
             this.scheduleList.push(e);
         },
         onBeforeDeleteSchedule(e) {
@@ -196,9 +296,13 @@ export default {
         onClickTimezonesCollapseBtn(e) {
             console.log('onClickTimezonesCollapseBtn');
             console.dir(e);
-        },
-        onSetTimezoneOffset(timestamp) {
-            console.log('onSetTimezoneOffset: ' + timestamp);
+            if (e) {
+                this.theme['week.timegridLeft.width'] = '100px';
+                this.theme['week.daygridLeft.width'] = '100px';
+            } else {
+                this.theme['week.timegridLeft.width'] = '50px';
+                this.theme['week.daygridLeft.width'] = '50px';
+            }
         }
     }
 };
