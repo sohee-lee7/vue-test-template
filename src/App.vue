@@ -143,72 +143,74 @@ export default {
         methodInvoke(method) {
             this.message = this.$refs.tuiGrid.invoke(method.name, ...method.args);
         },
-        onClick(nativeEvent, targetType, rowKey, columnName, instance) {
+        onClick(e) {
             console.log('onClick');
-            console.dir(nativeEvent);
+            console.dir(e);
         },
-        onCheck(rowKey, instance) {
-            console.log('onCheck : ' + rowKey);
-        },
-        onUnCheck(rowKey, instance) {
-            console.log('onUnCheck : ' + rowKey);
-        },
-        onDblClick(nativeEvent, targetType, rowKey, columnName, instance) {
+        onCheck(e) {
             console.log('onDblClick');
-            console.dir(nativeEvent);
+            console.dir(e);
         },
-        onMouseOver(nativeEvent, targetType, rowKey, columnName, instance) {
-            // console.log('onMouseOver');
-            // console.dir(nativeEvent);
+        onUnCheck(e) {
+            console.log('onUnCheck');
+            console.dir(e);
         },
-        onMouseOut(nativeEvent, targetType, rowKey, columnName, instance) {
-            // console.log('onMouseOut');
-            // console.dir(nativeEvent);
+        onDblClick(e) {
+            console.log('onDblClick');
+            console.dir(e);
         },
-        onMouseDown(nativeEvent, targetType, rowKey, columnName, instance) {
+        onMouseOver(e) {
+            console.log('onMouseOver');
+            console.dir(e);
+        },
+        onMouseOut(e) {
+            console.log('onMouseOut');
+            console.dir(e);
+        },
+        onMouseDown(e) {
             console.log('onMouseDown');
-            console.dir(nativeEvent);
+            console.dir(e);
         },
-        onFocusChange(rowKey, columnName, prevRowKey, prevColumnName, instance) {
+        onFocusChange(e) {
             console.log('onFocusChange');
-            console.dir(rowKey)
+            console.dir(e)
         },
-        onExpanded(rowKey, descendantRowKeys, instance) {
+        onExpanded(e) {
             console.log('onExpanded');
-            console.dir(rowKey);
+            console.dir(e);
         },
         onExpandedAll() {
             console.log('onExpandedAll');
         },
-        onCollapsed(rowKey, descendantRowKeys, instance) {
+        onCollapsed(e) {
             console.log('onCollapsed');
-            console.dir(rowKey);
+            console.dir(e);
         },
         onCollapsedAll() {
             console.log('onCollapsedAll');
         },
-        onBeforeRequest(instance) {
+        onBeforeRequest(e) {
             console.log('onBeforeRequest');
         },
-        onResponse(httpStatus, requestType, requestParameter, responseData, instance) {
+        onResponse(e) {
             console.log('onResponse');
         },
-        onSuccessResponse(httpStatus, requestType, requestParameter, responseData, instance) {
+        onSuccessResponse(e) {
             console.log('onSuccessResponse');
         },
-        onFailResponse(httpStatus, requestType, requestParameter, responseData, instance) {
+        onFailResponse(e) {
             console.log('onFailResponse');
         },
-        onErrorResponse(httpStatus, requestType, requestParameter, instance) {
+        onErrorResponse(e) {
             console.log('onFailResponse');
         },
-        onSelection(range, instance) {
+        onSelection(e) {
             console.log('onSelection');
-            console.dir(range);
+            console.dir(e);
         },
-        onDeleteRange(columnName, rowKeys, instance) {
+        onDeleteRange(e) {
             console.log('onDeleteRange');
-            console.dir(columnName);
+            console.dir(e);
         }
     }
 };
