@@ -25,7 +25,7 @@
     "webpack-server": "^0.1.2"
   },
   "dependencies": {
-    "@toast-ui/vue-grid": "^1.0.0",
+    "@toast-ui/vue-grid": "^1.0.1",
     "vue": "^2.5.17"
   }
 }

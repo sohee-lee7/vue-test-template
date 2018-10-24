@@ -47,6 +47,7 @@
     </div>
 </template>
 <script>
+import 'tui-grid/dist/tui-grid.css';
 import { Grid } from '@toast-ui/vue-grid';
 import * as dummy from './dummy.js';
 

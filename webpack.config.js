@@ -13,6 +13,11 @@ module.exports = {
             vue: 'vue/dist/vue.js'
         }
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'all'
+        }
+    },
     module: {
         rules: [
             {
