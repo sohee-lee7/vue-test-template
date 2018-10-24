@@ -14,7 +14,7 @@
             <button @click="pushTimezone">pushTimezone</button>
             <button @click="changeTheme">changeTheme</button>
             <button @click="monthVisibleWeeksCount">month.visibleWeeksCount</button>
-            <button @click="weekNarrowWeekend">week</button>
+            <button @click="weekChange">week</button>
             <button @click="changeTaskView">changeTaskView</button>
             <button @click="changeScheduleView">changeScheduleView</button>
             <button @click="addSchedule">addSchedule</button>
@@ -27,18 +27,17 @@
             </button>
             <p>Function Result : {{ message }}</p>
         </div>
-        <calendar
+        <calendar style="height: 800px"
             id="cal"
             ref="tuiCal"
-            :useCreationPopup="useCreationPopup"
             :useDetailPopup="useDetailPopup"
             :view="selectedView"
             :calendars="calendarList"
             :schedules="scheduleList"
             :theme="theme"
             :template="template"
-            :taskView="taskView"
-            :scheduleView="scheduleView"
+            :taskView="true"
+            :scheduleView="['time']"
             :month="month"
             :week="week"
             :timezones="timezones"
@@ -56,7 +55,12 @@
 </template>
 
 <script>
-import Calendar from '@toast-ui/vue-calendar/src/Calendar.vue';
+import 'tui-calendar/dist/tui-calendar.css'
+import { Calendar } from '@toast-ui/vue-calendar';
+
+// require('tui-calendar/dist/tui-calendar.css');
+// const toastui = require('@toast-ui/vue-calendar');
+// const Calendar = toastui.Calendar;
 
 const startDate= new Date(2018, 9, 15, 10, 1);
 const endDate= new Date(2018, 9, 15, 10, 10);
@@ -101,25 +105,30 @@ export default {
                     args: ['0', '0']
                 }
             ],
-            selectedView: 'week',
+            selectedView: 'month',
             calendarList: [{
                 id: '0',
                 name: 'my'
             }],
-            scheduleList: [{
-                id: '0',
-                calendarId: '0',
-                title: 'action1',
-                start: startDate,
-                end: endDate,
-                category: 'time'
-            }, {
-                id: '1',
-                calendarId: '0',
-                title: 'action1',
-                start: startDate,
-                end: endDate,
-                category: 'milestone'
+            scheduleList: [
+                {
+                    id: '1',
+                    calendarId: '1',
+                    title: 'my schedule',
+                    category: 'time',
+                    dueDateClass: '',
+                    start: '2018-10-18T22:30:00+09:00',
+                    end: '2018-10-19T02:30:00+09:00'
+                },
+                {
+                    id: '2',
+                    calendarId: '1',
+                    title: 'second schedule',
+                    category: 'time',
+                    dueDateClass: '',
+                    start: '2018-10-18T17:30:00+09:00',
+                    end: '2018-10-19T17:31:00+09:00',
+                    isReadOnly: true    // schedule is read-only
             }],
             timezones: [{
                 timezoneOffset: 540,
@@ -148,17 +157,16 @@ export default {
                 },
             },
             month: {
-                visibleWeeksCount: 4,
+                visibleWeeksCount: 6,
                 startDayOfWeek: 1
             },
             week: {
                 narrowWeekend: true,
                 showTimezoneCollapseButton: true,
-                timezonesCollapsed: true
+                timezonesCollapsed: false
             },
             taskView: true,
             scheduleView: true,
-            useCreationPopup: true,
             useDetailPopup: true,
             disableDblClick: true,
             isReadOnly: false,
@@ -200,13 +208,12 @@ export default {
             this.month.visibleWeeksCount = 2;
             this.month.startDayOfWeek = 3;
         },
-        weekNarrowWeekend() {
+        weekChange() {
             this.week.narrowWeekend = !this.week.narrowWeekend;
             this.week.showTimezoneCollapseButton = !this.week.showTimezoneCollapseButton;
             this.week.timezonesCollapsed = !this.week.timezonesCollapsed;
         },
         changeTaskView() {
-            this.taskView = ['milestone'];
             if (typeof this.taskView === 'boolean') {
                 if (this.taskView) {
                     this.taskView = !this.taskView;
@@ -245,6 +252,7 @@ export default {
                 id: ++this.sid,
                 calendarId: '0',
                 title: 'new Action ' + this.sid,
+                category: 'time',
                 start: addDays(startDate, this.sid),
                 end: addDays(endDate, this.sid)
             })
@@ -308,8 +316,4 @@ export default {
 };
 </script>
 <style>
-#cal {
-    width: 1000px;
-    height: 500px
-}
 </style>
